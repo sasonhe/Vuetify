@@ -1,18 +1,4 @@
 <template>
-<!-- <v-container fluid grid-list-md>
-  <v-card>
-    <v-card-title>
-      <h4>新增文章</h4></v-card-title>
-    <v-divider></v-divider>
-    <v-list dense>
-      <v-list-tile>
-        <v-list-tile-content>Calories:</v-list-tile-content>
-        <v-list-tile-content class="align-end">123123123123</v-list-tile-content>
-      </v-list-tile>
-
-    </v-list>
-  </v-card>
-</v-container> -->
 <v-container fluid grid-list-md>
   <v-layout row wrap>
     <v-flex md8>
@@ -22,8 +8,8 @@
         <v-divider></v-divider>
         <v-card-text>
           <v-form v-model="valid" ref="form" lazy-validation>
-            <v-text-field label="文章标题" v-model="article_title" :rules="titleRules" required></v-text-field>
-            <v-text-field label="文章描述" v-model="article_desc" :rules="descRules" required></v-text-field>
+            <v-text-field label="文章标题" v-model="article_title" :rules="[v => !!v || '请输入文章标题']" required></v-text-field>
+            <v-text-field label="文章描述" v-model="article_desc" :rules="[v => !!v || '请输入文章描述']" required></v-text-field>
             <v-select label="文章分类" v-model="article_type" :items="types" :rules="[v => !!v || '请选择分类']" required></v-select>
 
             <div class="quill-editor-example">
@@ -39,9 +25,6 @@
           <h4>发布文章</h4></v-card-title>
         <v-divider></v-divider>
         <v-card-text>
-          <!-- <v-btn @click="submit" :disabled="!valid">
-            submit
-          </v-btn> -->
           <v-btn color="success" @click="submit" :disabled="!valid">发布</v-btn>
           <v-btn @click="clear">清除</v-btn>
         </v-card-text>
@@ -68,13 +51,7 @@ export default {
       valid: true,
       article_title: '',
       article_content: '',
-      titleRules: [
-        v => !!v || '请输入文章标题'
-      ],
       article_desc: '',
-      descRules: [
-        v => !!v || '请输入文章描述'
-      ],
       article_type: null,
       types: [
         '文章分类1',
