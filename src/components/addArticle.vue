@@ -35,13 +35,6 @@
 </template>
 
 <script>
-// import axios from 'axios'
-// import 'quill/dist/quill.core.css';
-// import 'quill/dist/quill.snow.css';
-// import 'quill/dist/quill.bubble.css';
-// import {
-//   quillEditor
-// } from 'vue-quill-editor';
 import {
   VueEditor
 } from 'vue2-editor';
