@@ -74,7 +74,7 @@
       <v-toolbar-title class="white--text" slot="extension" style="margin-left: 0px">
         <v-breadcrumbs>
           <v-icon slot="divider">chevron_right</v-icon>
-          <v-breadcrumbs-item>首页</v-breadcrumbs-item>
+          <v-breadcrumbs-item to="/">首页</v-breadcrumbs-item>
           <v-breadcrumbs-item v-for="(item,i) in meuns" :key="i" :disabled="item.disabled">
             {{ item.name }}
           </v-breadcrumbs-item>
