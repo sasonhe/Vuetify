@@ -8,15 +8,16 @@ Vue.use(Router)
 
 export default new Router({
   routes: [{
-      path: '/addArticle',
-      name: 'addArticle',
-      component: addArticle
-    },
-    {
       path: '/',
       name: 'Home',
       component: Home
     },
+    {
+      path: '/addArticle',
+      name: 'addArticle',
+      component: addArticle
+    },
+
     {
       path: '/dataTable',
       name: 'dataTable',
