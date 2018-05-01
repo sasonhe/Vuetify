@@ -12,9 +12,7 @@
             <v-text-field label="文章描述" v-model="article_desc" :rules="[v => !!v || '请输入文章描述']" required></v-text-field>
             <v-select label="文章分类" v-model="article_type" :items="types" :rules="[v => !!v || '请选择分类']" required></v-select>
 
-            <div class="quill-editor-example">
-              <VueEditor ref="myTextEditor" v-model="article_content" placeholder="文章内容"></VueEditor>
-            </div>
+            <VueEditor ref="myTextEditor" id="editor" v-model="article_content" placeholder="文章内容"></VueEditor>
           </v-form>
         </v-card-text>
       </v-card>
@@ -22,7 +20,8 @@
     <v-flex md4>
       <v-card>
         <v-card-title>
-          <h4>发布文章</h4></v-card-title>
+          <h4>发布文章</h4>
+        </v-card-title>
         <v-divider></v-divider>
         <v-card-text>
           <v-btn color="success" @click="submit" :disabled="!valid">发布</v-btn>
@@ -79,8 +78,8 @@ export default {
   }
 }
 </script>
-<style scoped>
-.quill-editor {
+<style>
+#editor {
   height: 300px;
 }
 </style>

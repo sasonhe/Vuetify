@@ -18,7 +18,6 @@
         <div slot="header">
           <v-icon>{{item.icon}}</v-icon>
           <span style="margin-left:8px;">{{item.name}}</span>
-
         </div>
         <v-list class="pt-0" dense>
           <v-divider light></v-divider>
@@ -32,28 +31,6 @@
     </v-expansion-panel>
   </v-navigation-drawer>
 
-  <!-- <v-toolbar app :clipped-left="clipped">
-    <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-    <v-avatar size="20px">
-      <img src="./assets/nav6.png" alt="John">
-    </v-avatar>
-    <v-toolbar-title v-text="title" style="font-size:16px"></v-toolbar-title>
-    <v-breadcrumbs>
-      <v-icon slot="divider">chevron_right</v-icon>
-      <v-breadcrumbs-item v-for="item in items" :key="item.text" :disabled="item.disabled">
-        {{ item.title }}
-      </v-breadcrumbs-item>
-    </v-breadcrumbs>
-    <v-spacer></v-spacer>
-    <transition name="fade">
-      <v-layout row align-center style="max-width: 320px" v-show="searchShow" class="search">
-        <v-text-field placeholder="Search..." single-line append-icon="search" :append-icon-cb="() => {}" color="teal" hide-details></v-text-field>
-      </v-layout>
-    </transition>
-    <v-btn icon @click.stop="_searchBtn" v-show="searchBtn" style="margin:0px 0px 2px 0px">
-      <v-icon>search</v-icon>
-    </v-btn>
-  </v-toolbar> -->
   <v-card color="grey lighten-4" flat tile>
     <v-toolbar dense prominent extended app :clipped-left="clipped">
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
@@ -79,7 +56,6 @@
             {{ item.name }}
           </v-breadcrumbs-item>
         </v-breadcrumbs>
-
       </v-toolbar-title>
     </v-toolbar>
 
