@@ -8,11 +8,11 @@
         <v-divider></v-divider>
         <v-card-text>
           <v-form v-model="valid" ref="form" lazy-validation>
-            <v-text-field label="文章标题" v-model="article_title" :rules="[v => !!v || '请输入文章标题']" required></v-text-field>
-            <v-text-field label="文章描述" v-model="article_desc" :rules="[v => !!v || '请输入文章描述']" required></v-text-field>
-            <v-select label="文章分类" v-model="article_type" :items="types" :rules="[v => !!v || '请选择分类']" required></v-select>
+            <v-text-field label="文章标题" v-model="title" :rules="[v => !!v || '请输入文章标题']" required></v-text-field>
+            <v-text-field label="文章描述" v-model="describae" :rules="[v => !!v || '请输入文章描述']" required></v-text-field>
+            <v-select label="文章分类" v-model="columns" :items="types" :rules="[v => !!v || '请选择分类']" required></v-select>
 
-            <VueEditor ref="myTextEditor" id="editor" v-model="article_content" placeholder="文章内容"></VueEditor>
+            <VueEditor ref="myTextEditor" id="editor" v-model="contents" placeholder="文章内容"></VueEditor>
           </v-form>
         </v-card-text>
       </v-card>
@@ -41,36 +41,57 @@ export default {
   data() {
     return {
       valid: true,
-      article_title: '',
-      article_content: '',
-      article_desc: '',
-      article_type: null,
+      title: '',
+      contents: '',
+      describae: '',
+      columns: null,
       types: [
         '文章分类1',
         '文章分类2',
         '文章分类3',
         '文章分类4'
-      ]
+      ],
+      regInfo: {}
     }
   },
 
   methods: {
     submit() {
+      let _this = this;
       if (this.$refs.form.validate()) {
-        console.log(this.article_content);
-        if (this.article_content == '') {
-          console.log("空");
-        }
-        // Native form submission is not yet supported
-        // axios.post('/api/submit', {
-        //   name: this.name,
-        //   select: this.select,
-        // })
+        // console.log(this.contents);
+        // if (this.contents == '') {
+        //   console.log("空");
+        // }
+        _this.$http.post('/addArticle', {
+          title: _this.title,
+          contents: _this.contents,
+          describae: _this.describae,
+          columns: _this.columns
+        }).then((res) => {
+          if (res.status == 200) {
+            _this.regInfo = res.data;
+            if (_this.regInfo.status == 1) {
+              console.log(_this.regInfo.status);
+            } else {
+              alert('注册失败');
+            }
+          } else {
+            alert('出现错误');
+          }
+          console.log(res);
+        }, (err) => {
+          console.log(err);
+        });
+
+
       }
     },
+
     clear() {
       this.$refs.form.reset()
     }
+
   },
   components: {
     // quillEditor,
