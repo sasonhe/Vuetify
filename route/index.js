@@ -1,38 +1,31 @@
 const express = require('express');
 const mysql = require('mysql');
-const common = require('../libs/common');
 const db = mysql.createPool({
-  // host: 'localhost',
-  // user: 'root',
-  // password: 'root',
-  // database: 'myigou'
-  host: 'bdm313469335.my3w.com',
-  user: 'bdm313469335',
-  password: '213036sasonhe',
-  port: '3306',
-  database: 'bdm313469335_db',
-  insecureAuth: true
+  host: 'localhost',
+  user: 'root',
+  password: 'root',
+  database: 'mydb'
 });
 module.exports = () => {
   const route = express.Router();
 
-  route.post('/reg', (req, res) => {
-
-    let mObj = {};
-    for (let obj in req.body) {
-      mObj = JSON.parse(obj);
-    }
-    let regName = mObj.regName;
-    let regPasswd = mObj.regPasswd;
-    regPasswd = common.md5(regPasswd + common.MD5_SUFFXIE);
-    const insUserInfo = `INSERT INTO user(user_name,login_password,user_number) VALUES('${regName}','${regPasswd}','${regName}')`;
-    delReg(insUserInfo, res);
+  route.post('/addArticle', (req, res) => {
+    let title = req.body.title;
+    let columns = req.body.columns;
+    let describae = req.body.describae;
+    let keywords = req.body.keywords;
+    let contents = req.body.contents;
+    let files = req.body.files;
+    let date = new Date().getFullYear();
+    console.log(title, columns, describae, contents);
+    const insArticleInfo = `INSERT INTO article_info(title,columns,describae,keywords,contents,files,date) VALUES('${title}','${columns}','${describae}','${keywords}','${contents}','${files}','${date}')`;
+    addArticle(insArticleInfo, res);
   });
   /*
    *deal user register
    */
-  function delReg(insUserInfo, res) {
-    db.query(insUserInfo, (err) => {
+  function addArticle(insArticleInfo, res) {
+    db.query(insArticleInfo, (err) => {
       if (err) {
         console.error(err);
         res.send({
@@ -47,6 +40,8 @@ module.exports = () => {
       }
     })
   };
+
+
 
   return route;
 }
