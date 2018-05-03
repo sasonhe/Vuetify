@@ -85,6 +85,7 @@ export default {
         var reader = new FileReader();
         reader.onload = function(event) {
           var imgUrl = event.target.result;
+          // console.log(imgUrl);
           var img = new Image();
           img.onload = function() {
             var canvasId = 'canvasBase64Imgid',
@@ -128,37 +129,24 @@ export default {
         //   console.log("空");
         // }
         _this.$http.post('/addArticle', {
-          title: _this.title,
-          keywords: _this.keywords,
-          files: _this.files,
-          contents: _this.contents,
-          describae: _this.describae,
-          columns: _this.columns
-        }).then((res) => {
-          console.log(_this.files);
-          if (res.status == 200) {
-            _this.regInfo = res.data;
-            if (_this.regInfo.status == 1) {
-              console.log(_this.regInfo.status);
-            } else {
-              alert('注册失败');
-            }
-          } else {
-            alert('出现错误');
-          }
-          console.log(res);
-        }, (err) => {
-          console.log(err);
-        });
-
-
+            title: _this.title,
+            keywords: _this.keywords,
+            files: _this.files,
+            contents: _this.contents,
+            describae: _this.describae,
+            columns: _this.columns
+          })
+          .then(function(res) {
+            console.log(res);
+          })
+          .catch(function(error) {
+            console.log(error);
+          });
       }
     },
-
     clear() {
       this.$refs.form.reset()
     }
-
   },
   components: {
     VueEditor

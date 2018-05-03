@@ -3,6 +3,10 @@ const mysql = require('mysql');
 // const upload = require('multer')({
 //   dest: 'uploads/'
 // });
+// const multer = require('multer')
+// const upload = multer({
+//   dest: './upfile/'
+// });
 const fs = require('fs');
 const db = mysql.createPool({
   host: 'localhost',
@@ -21,20 +25,17 @@ module.exports = () => {
     let contents = req.body.contents;
     let files = req.body.files;
     let date = new Date().getTime();
-
-    var base64Data = files.replace(/^data:image\/\w+;base64,/, '');
-    var binaryData = new Buffer(base64Data, 'base64').toString('binary');
-    fs.writeFile('./static/' + date + '.png', binaryData, 'binary', function(err) {
+    let base64Data = files.replace(/^data:image\/\w+;base64,/, '');
+    let fname = date + '.png';
+    let binaryData = new Buffer(base64Data, 'base64').toString('binary');
+    fs.writeFile('./upfile/' + fname, binaryData, 'binary', function(err) {
       if (err) {
         console.log(err);
       }
-
     })
     // console.log(title, columns, describae, contents, date, files);
-    console.log(base64Data);
-
-    // const insArticleInfo = `INSERT INTO article_info(title,columns,describae,keywords,contents,files,date) VALUES('${title}','${columns}','${describae}','${keywords}','${contents}','${files}','${date}')`;
-    // addArticle(insArticleInfo, res);
+    const insArticleInfo = `INSERT INTO article_info(title,columns,describae,keywords,contents,files,date) VALUES('${title}','${columns}','${describae}','${keywords}','${contents}','${fname}','${date}')`;
+    addArticle(insArticleInfo, res);
   });
   /*
    *deal user register
@@ -49,7 +50,7 @@ module.exports = () => {
         }).end();
       } else {
         res.send({
-          'msg': '注册成功',
+          'msg': '添加成功',
           'status': 1
         }).end();
       }

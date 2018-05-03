@@ -5,7 +5,9 @@ const app = express();
 app.use(bodyParser.urlencoded({
   extended: false
 }));
-app.use(bodyParser.json());
+app.use(bodyParser.json({
+  limit: '50mb'
+}));
 //the cores config
 app.all('*', function(req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', '*');
