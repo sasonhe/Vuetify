@@ -19,11 +19,16 @@ app.all('*', function(req, res, next) {
     next();
   }
 });
-app.listen(3000, () => {
-  console.log("正在监听3000端口");
+// app.listen(3000, () => {
+//   console.log("正在监听3000端口");
+//
+// });
+const server = app.listen(3000, () => {
+  const host = server.address().address;
+  const port = server.address().port;
 
+  console.log('app listening at http://%s:%s', host, port);
 });
-
 
 //deal router
 app.use('/', require('./route/index.js')());

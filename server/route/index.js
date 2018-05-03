@@ -1,8 +1,8 @@
 const express = require('express');
 const mysql = require('mysql');
-const upload = require('multer')({
-  dest: 'uploads/'
-});
+// const upload = require('multer')({
+//   dest: 'uploads/'
+// });
 const fs = require('fs');
 const db = mysql.createPool({
   host: 'localhost',
