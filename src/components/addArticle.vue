@@ -11,7 +11,7 @@
             <v-text-field label="文章标题" v-model="title" :rules="[v => !!v || '请输入文章标题']" required></v-text-field>
             <v-text-field label="关键词" v-model="keywords" :rules="[v => !!v || '请输入关键词']" required></v-text-field>
             <v-text-field label="文章描述" v-model="describae" :rules="[v => !!v || '请输入文章描述']" required></v-text-field>
-            <v-select label="文章分类" v-model="columns" :items="types" :rules="[v => !!v || '请选择分类']" required></v-select>
+
             <div>
               <input type="file" name="file" class="upload__input" @change="uploadChange" accept="image/png,image/gif">
               <div class="imgSrc">
@@ -29,6 +29,11 @@
           <h4>发布文章</h4>
         </v-card-title>
         <v-divider></v-divider>
+        <v-form ref="form1" lazy-validation>
+          <v-card-text>
+            <v-select label="文章分类" v-model="columns" :items="types" :rules="[v => !!v || '请选择分类']" required></v-select>
+          </v-card-text>
+        </v-form>
         <v-card-text>
           <v-btn color="success" @click="submit" :disabled="!valid">发布</v-btn>
           <v-btn @click="clear">清除</v-btn>
@@ -68,9 +73,10 @@ export default {
     uploadChange(event) {
       if (event.target.files.length > 0) {
         this.files = event.target.files[0]; //提交的图片
-        this.getBase64(event.target, (url) => {
-          this.files = 'data:image/png;base64,' + url; //显示的图片
-        });
+        console.log(this.files);
+        // this.getBase64(event.target, (url) => {
+        //   this.files = 'data:image/png;base64,' + url; //显示的图片
+        // });
       }
     },
     getBase64(file, callback) {
@@ -123,7 +129,7 @@ export default {
     },
     submit() {
       let _this = this;
-      if (this.$refs.form.validate()) {
+      if (this.$refs.form.validate() && this.$refs.form1.validate()) {
         // console.log(this.contents);
         // if (this.contents == '') {
         //   console.log("空");
@@ -145,7 +151,8 @@ export default {
       }
     },
     clear() {
-      this.$refs.form.reset()
+      this.$refs.form.reset();
+      this.$refs.form1.reset();
     }
   },
   components: {

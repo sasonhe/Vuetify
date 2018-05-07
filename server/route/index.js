@@ -1,12 +1,5 @@
 const express = require('express');
 const mysql = require('mysql');
-// const upload = require('multer')({
-//   dest: 'uploads/'
-// });
-// const multer = require('multer')
-// const upload = multer({
-//   dest: './upfile/'
-// });
 const fs = require('fs');
 const db = mysql.createPool({
   host: 'localhost',
@@ -33,7 +26,6 @@ module.exports = () => {
         console.log(err);
       }
     })
-    // console.log(title, columns, describae, contents, date, files);
     const insArticleInfo = `INSERT INTO article_info(title,columns,describae,keywords,contents,files,date) VALUES('${title}','${columns}','${describae}','${keywords}','${contents}','${fname}','${date}')`;
     addArticle(insArticleInfo, res);
   });
@@ -56,8 +48,6 @@ module.exports = () => {
       }
     })
   };
-
-
 
   return route;
 }
