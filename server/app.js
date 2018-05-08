@@ -16,15 +16,11 @@ app.all('*', function(req, res, next) {
 
   if (req.method == 'OPTIONS') {
     res.send(200);
-    // /make the require of options turn back quickly/
   } else {
     next();
   }
 });
-// app.listen(3000, () => {
-//   console.log("正在监听3000端口");
-//
-// });
+
 const server = app.listen(3000, () => {
   const host = server.address().address;
   const port = server.address().port;
