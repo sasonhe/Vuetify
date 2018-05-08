@@ -72,7 +72,7 @@ export default {
     uploadChange(event) {
       if (event.target.files.length > 0) {
         this.files = event.target.files[0]; //提交的图片
-        console.log(this.files);
+        // console.log(this.files);
         this.getBase64(event.target, (url) => {
           this.files = 'data:image/png;base64,' + url; //显示的图片
         });
@@ -142,7 +142,9 @@ export default {
             columns: _this.columns
           })
           .then(function(res) {
-            console.log(res);
+            // console.log(res);
+            _this.clear();
+            _this.contents = '';
           })
           .catch(function(error) {
             console.log(error);

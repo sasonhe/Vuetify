@@ -5,7 +5,7 @@
     <v-list class="pa-1">
       <v-list-tile avatar tag="div">
         <v-list-tile-avatar>
-          <img src="https://randomuser.me/api/portraits/men/85.jpg">
+          <img src="https://cn.vuejs.org/images/logo.png" width="100%">
         </v-list-tile-avatar>
         <v-list-tile-content>
           <v-list-tile-title>hello Hi</v-list-tile-title>

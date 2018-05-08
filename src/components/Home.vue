@@ -75,9 +75,6 @@
 </v-container>
 </template>
 <script>
-import {
-  formatDate
-} from '../assets/js/formatDate.js';
 export default {
   data() {
     return {

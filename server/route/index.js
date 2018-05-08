@@ -76,12 +76,11 @@ module.exports = () => {
    */
   route.get('/deleteArticle', (req, res) => {
     let id = req.query.id;
-    console.log(id);
     res.send({
       'msg': '10'
     });
     const del = `DELETE FROM article_info where id='${id}'`;
-    // deleteArticle(del, res);
+    deleteArticle(del, res);
   });
 
   function deleteArticle(del, res) {
