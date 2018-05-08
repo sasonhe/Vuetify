@@ -61,7 +61,7 @@
 
   </v-card>
   <v-content>
-    <router-view/>
+    <router-view />
   </v-content>
 
   <v-footer :fixed="fixed" app :style="{paddingLeft: drawer?'220px':'0px', zIndex:2}">
@@ -176,7 +176,6 @@ export default {
       this.searchBtn = false;
       this.searchShow = true;
     }
-
   }
 }
 </script>

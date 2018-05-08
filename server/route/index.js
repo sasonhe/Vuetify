@@ -30,7 +30,7 @@ module.exports = () => {
     addArticle(insArticleInfo, res);
   });
   /*
-   *deal user register
+   *deal user addArticle
    */
   function addArticle(insArticleInfo, res) {
     db.query(insArticleInfo, (err) => {
@@ -48,6 +48,53 @@ module.exports = () => {
       }
     })
   };
+  /*
+   *查询文章列表
+   */
+  route.get('/articleList', (req, res) => {
+    const sql = 'SELECT * FROM article_info';
+    // "SELECT *FROM textinfo order by date desc limit 8"
+    getArticleList(sql, res);
+  });
 
+  function getArticleList(sql, res) {
+    db.query(sql, (err, data) => {
+      if (err) {
+        console.log(err);
+        res.status(500).send('服务端错误').end();
+      } else {
+        if (data.length == 0) {
+          res.status(500).send('没有数据').end();
+        } else {
+          res.send(data);
+        }
+      }
+    });
+  }
+  /**
+   * 删除文章
+   */
+  route.get('/deleteArticle', (req, res) => {
+    let id = req.query.id;
+    console.log(id);
+    res.send({
+      'msg': '10'
+    });
+    const del = `DELETE FROM article_info where id='${id}'`;
+    // deleteArticle(del, res);
+  });
+
+  function deleteArticle(del, res) {
+    db.query(del, (err, data) => {
+      if (err) {
+        console.log(err);
+        res.status(500).send('服务端错误').end();
+      } else {
+        res.send({
+          'msg': '10'
+        });
+      }
+    });
+  }
   return route;
 }

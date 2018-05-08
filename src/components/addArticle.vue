@@ -11,7 +11,6 @@
             <v-text-field label="文章标题" v-model="title" :rules="[v => !!v || '请输入文章标题']" required></v-text-field>
             <v-text-field label="关键词" v-model="keywords" :rules="[v => !!v || '请输入关键词']" required></v-text-field>
             <v-text-field label="文章描述" v-model="describae" :rules="[v => !!v || '请输入文章描述']" required></v-text-field>
-
             <div>
               <input type="file" name="file" class="upload__input" @change="uploadChange" accept="image/png,image/gif">
               <div class="imgSrc">
@@ -74,9 +73,9 @@ export default {
       if (event.target.files.length > 0) {
         this.files = event.target.files[0]; //提交的图片
         console.log(this.files);
-        // this.getBase64(event.target, (url) => {
-        //   this.files = 'data:image/png;base64,' + url; //显示的图片
-        // });
+        this.getBase64(event.target, (url) => {
+          this.files = 'data:image/png;base64,' + url; //显示的图片
+        });
       }
     },
     getBase64(file, callback) {
