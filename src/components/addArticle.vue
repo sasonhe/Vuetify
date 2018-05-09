@@ -39,6 +39,10 @@
         </v-card-text>
       </v-card>
     </v-flex>
+    <v-snackbar top="top" v-model="snackbar" color="success">
+      文章添加成功！
+      <v-btn flat @click.native="snackbar = false">关闭</v-btn>
+    </v-snackbar>
   </v-layout>
 </v-container>
 </template>
@@ -52,6 +56,7 @@ export default {
   data() {
     return {
       valid: true,
+      snackbar: false,
       title: '',
       keywords: '',
       contents: '',
@@ -142,7 +147,7 @@ export default {
             columns: _this.columns
           })
           .then(function(res) {
-            // console.log(res);
+            _this.snackbar = true;
             _this.clear();
             _this.contents = '';
           })

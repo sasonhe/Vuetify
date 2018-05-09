@@ -5,27 +5,29 @@
     <v-list class="pa-1">
       <v-list-tile avatar tag="div">
         <v-list-tile-avatar>
-          <img src="https://cn.vuejs.org/images/logo.png" width="100%">
+          <img src="./assets/nav6.png" width="100%">
         </v-list-tile-avatar>
         <v-list-tile-content>
-          <v-list-tile-title>hello Hi</v-list-tile-title>
+          <v-list-tile-title>hello Hi
+            <router-link to="/" style="float:right" active-class="link-active" title="首页">
+              <v-icon>home</v-icon>
+            </router-link>
+          </v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
     </v-list>
     <v-divider light></v-divider>
     <v-expansion-panel focusable>
-      <v-expansion-panel-content v-for="(item,i) in meuns" :key="i">
+      <v-expansion-panel-content v-for="(item,i) in meuns" :key="i" :value="i===0">
         <div slot="header">
           <v-icon>{{item.icon}}</v-icon>
           <span style="margin-left:8px;">{{item.name}}</span>
         </div>
         <v-list class="pt-0" dense>
-          <v-divider light></v-divider>
-          <v-list-tile v-for="(items,i) in item.menusItem" :key="i" :to="items.url">
-            <v-list-tile-title style="padding-left: 42px;">
-              {{ items.title }}
-            </v-list-tile-title>
-          </v-list-tile>
+          <v-divider></v-divider>
+          <div v-for="(items,i) in item.menusItem" :key="i">
+            <router-link class="nav" :to="items.url">{{ items.title }}</router-link>
+          </div>
         </v-list>
       </v-expansion-panel-content>
     </v-expansion-panel>
@@ -38,24 +40,15 @@
         <img src="./assets/nav6.png" alt="John">
       </v-avatar>
       <v-toolbar-title v-text="title" style="font-size:16px"></v-toolbar-title>
-
       <v-spacer></v-spacer>
-      <transition name="fade">
-        <v-layout row align-center style="max-width: 320px" v-show="searchShow" class="search">
-          <v-text-field placeholder="Search..." single-line append-icon="search" :append-icon-cb="() => {}" hide-details></v-text-field>
-        </v-layout>
-      </transition>
-      <v-btn icon @click.stop="_searchBtn" v-show="searchBtn" style="margin:0px 0px 2px 0px">
-        <v-icon>search</v-icon>
-      </v-btn>
       <v-toolbar-title class="white--text" slot="extension" style="margin-left: 0px">
-        <v-breadcrumbs>
+        <!-- <v-breadcrumbs>
           <v-icon slot="divider">chevron_right</v-icon>
           <v-breadcrumbs-item to="/">首页</v-breadcrumbs-item>
           <v-breadcrumbs-item v-for="(item,i) in meuns" :key="i" :disabled="item.disabled">
             {{ item.name }}
           </v-breadcrumbs-item>
-        </v-breadcrumbs>
+        </v-breadcrumbs> -->
       </v-toolbar-title>
     </v-toolbar>
 
@@ -78,8 +71,8 @@ export default {
       clipped: false,
       drawer: true,
       fixed: false,
-      searchShow: true,
-      searchBtn: false,
+      // searchShow: true,
+      // searchBtn: false,
       meuns: [{
           "name": "数据管理",
           "icon": "list",
@@ -134,35 +127,19 @@ export default {
       ],
       miniVariant: false,
       right: true,
-      title: '深圳市低俗文化传播有限公司'
+      title: '深圳市先施公司'
     }
   },
   created() {
     if (this._isMobile()) {
       //手机端
       this.drawer = false;
-      this.searchShow = false;
-      this.searchBtn = true;
     } else {
       // pc端
       this.drawer = true;
-      this.searchShow = true;
-      this.searchBtn = false;
     }
   },
-  mounted() {
-    window.onresize = () => {
-      let screenWidth = document.body.clientWidth || document.documentElement.clientWidth;
-      if (screenWidth < 420) {
-        this.searchShow = false;
-        this.searchBtn = true;
-      } else {
-        this.searchShow = true;
-        this.searchBtn = false;
-      }
-    }
-
-  },
+  mounted() {},
   computed: {
 
   },
@@ -171,32 +148,31 @@ export default {
     _isMobile() {
       let flag = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)
       return flag;
-    },
-    _searchBtn() {
-      this.searchBtn = false;
-      this.searchShow = true;
     }
   }
 }
 </script>
 <style scoped>
-.search {
-  transform: translate3d(0, 0, 0);
-}
-
-.search.fade-enter-active,
-.search.fade-leave-active {
-  transition: all 0.2s linear;
-}
-
-.search.fade-enter,
-.search.fade-leave-active {
-  transform: translate3d(100%, 0, 0);
-}
-
-
 .expansion-panel__container--active,
 .expansion-panel__container:hover {
   background-color: rgba(0, 0, 0, .7) !important;
+}
+
+.nav {
+  display: block;
+  height: 40px;
+  line-height: 40px;
+  padding-left: 60px;
+  color: #fff;
+  text-decoration: none;
+}
+
+.router-link-active {
+  background: #009688;
+  transition: all 0.5s;
+}
+
+.router-link-exact-active.link-active .icon {
+  color: #009688;
 }
 </style>

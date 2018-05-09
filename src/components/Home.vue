@@ -2,7 +2,6 @@
 <v-container fluid grid-list-md>
   <v-card>
     <v-card-title>
-      <!-- <h4>文章列表</h4> -->
       <v-layout row wrap>
         <v-flex md6>
           <v-text-field v-model="search" append-icon="search" label="Search" single-line hide-details></v-text-field>
