@@ -76,9 +76,6 @@ module.exports = () => {
    */
   route.get('/deleteArticle', (req, res) => {
     let id = req.query.id;
-    res.send({
-      'msg': '10'
-    });
     const del = `DELETE FROM article_info where id='${id}'`;
     deleteArticle(del, res);
   });
@@ -90,8 +87,9 @@ module.exports = () => {
         res.status(500).send('服务端错误').end();
       } else {
         res.send({
-          'msg': '10'
-        });
+          'msg': '删除成功',
+          'status': 200
+        }).end();
       }
     });
   }

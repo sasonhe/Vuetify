@@ -25,16 +25,27 @@
             ></v-checkbox>
           </th>
           <th class="text-xs-left">ID</th>
-          <th
+          <!-- <th
             class="text-xs-left"
             v-for="header in props.headers"
             :key="header.text"
             :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
             @click="changeSort(header.value)"
           >
+
             <v-icon small>arrow_upward</v-icon>
             {{ header.text }}
-          </th>
+          </th> -->
+          <th class="text-xs-left">文章标题</th>
+          <th class="text-xs-left">文章分类</th>
+          <th
+          class="text-xs-left"
+          @click="toggleOrder"
+          :class="['column sortable', pagination.descending ? 'desc' : 'asc', props.headers.value === pagination.sortBy ? 'active' : '']"
+          >
+          <v-icon small>arrow_upward</v-icon>
+          创建日期
+        </th>
           <th class="text-xs-left">操作</th>
         </tr>
       </template>
@@ -56,11 +67,12 @@
           <v-btn icon class="mx-0" >
             <v-icon color="teal">edit</v-icon>
           </v-btn>
-          <v-btn icon class="mx-0" @click="deleteItem(props.item.id,props.item)">
+          <v-btn icon class="mx-0" @click="deleteShow(props.item.id,props.item)">
             <v-icon color="pink">delete</v-icon>
           </v-btn>
           </td>
         </tr>
+
       </template>
       <template slot="pageText" slot-scope="props">
      {{ props.pageStart }} - {{ props.pageStop }} 共 {{ props.itemsLength }}条
@@ -70,7 +82,20 @@
       </v-alert>
     </v-data-table>
   </v-card>
-
+  <!-- 删除弹框 -->
+  <v-layout row justify-center>
+    <v-dialog v-model="dialog" max-width="320">
+      <v-card>
+        <v-card-title class="headline text-xs-center">您要确定删除吗?</v-card-title>
+        <!-- <v-card-text>删除后数据不可恢复</v-card-text> -->
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="green darken-1" small flat="flat" @click.native="dialog = false">取消</v-btn>
+          <v-btn color="info darken-1" small @click="deleteItem">确定</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+  </v-layout>
 </v-container>
 </template>
 <script>
@@ -78,6 +103,9 @@ export default {
   data() {
     return {
       valid: false,
+      dialog: false,
+      deleteId: '',
+      deleteNum: '',
       pagination: {
         sortBy: 'date'
       },
@@ -115,6 +143,9 @@ export default {
       });
   },
   methods: {
+    toggleOrder() {
+      this.pagination.descending = !this.pagination.descending;
+    },
     toggleAll() {
       if (this.selected.length) {
         this.selected = [];
@@ -131,29 +162,32 @@ export default {
         this.valid = false;
       }
     },
-    deleteItem(id, num) {
+    deleteShow(id, num) {
+      let _this = this;
+      _this.deleteId = id;
+      _this.deleteNum = num;
+      _this.dialog = true;
+
+    },
+    deleteItem() {
       let _this = this;
       _this.$http.get('/deleteArticle', {
           params: {
-            'id': id
+            'id': _this.deleteId
           }
         })
         .then(function(res) {
-          const index = _this.desserts.indexOf(num)
-          confirm('你确定要删除这条信息吗?') && _this.desserts.splice(index, 1)
+          let num = _this.deleteNum;
+          if (res.data.status == 200) {
+            const index = _this.desserts.indexOf(num);
+            _this.desserts.splice(index, 1);
+            _this.dialog = false;
+          }
           console.log(res);
         })
         .catch(function(error) {
           console.log(error);
         });
-    },
-    changeSort(column) {
-      if (this.pagination.sortBy === column) {
-        this.pagination.descending = !this.pagination.descending
-      } else {
-        this.pagination.sortBy = column
-        this.pagination.descending = false
-      }
     }
   },
   filters: {
