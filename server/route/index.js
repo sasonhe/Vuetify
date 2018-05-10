@@ -15,11 +15,20 @@ module.exports = () => {
     let columns = req.body.columns;
     let describae = req.body.describae;
     let keywords = req.body.keywords;
-    let contents = req.body.contents;
+    let contents = req.body.contents.toString();
     let files = req.body.files;
+    let str = files.substring(11, 15);
+    let imgType = str.replace(/[&\|\\\*^%$#@、\;]/g, "");
     let date = new Date().getTime();
     let base64Data = files.replace(/^data:image\/\w+;base64,/, '');
-    let fname = date + '.png';
+    let fname = '';
+
+    // console.log(str);
+    if (imgType == 'jpeg') {
+      fname = date + '.jpg';
+    } else if (imgType == 'png') {
+      fname = date + '.png';
+    }
     let binaryData = new Buffer(base64Data, 'base64').toString('binary');
     fs.writeFile('./upfile/' + fname, binaryData, 'binary', function(err) {
       if (err) {

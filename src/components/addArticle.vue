@@ -89,7 +89,8 @@ export default {
       if (event.target.files.length > 0) {
         this.files = event.target.files[0]; //提交的图片
         this.getBase64(event.target, (url) => {
-          this.files = 'data:image/png;base64,' + url; //显示的图片
+          this.files = url; //显示的图片
+          console.log(this.files);
         });
       }
     },
@@ -106,37 +107,8 @@ export default {
         reader.onload = function(event) {
           var imgUrl = event.target.result;
           // console.log(imgUrl);
-          var img = new Image();
-          img.onload = function() {
-            var canvasId = 'canvasBase64Imgid',
-              canvas = document.getElementById(canvasId);
-            if (canvas != null) {
-              document.body.removeChild(canvas);
-            }
-            var canvas = document.createElement("canvas");
-            canvas.innerHTML = 'New Canvas';
-            canvas.setAttribute("id", canvasId);
-            canvas.style.display = 'none';
-            document.body.appendChild(canvas);
-            canvas.width = this.width;
-            canvas.height = this.height;
-            var imageWidth = this.width,
-              imageHeight = this.height;
-            if (this.width > maxWidth) {
-              imageWidth = maxWidth;
-              imageHeight = this.height * maxWidth / this.width;
-              canvas.width = imageWidth;
-              canvas.height = imageHeight;
-            }
-            var context = canvas.getContext('2d');
-            context.clearRect(0, 0, imageWidth, imageHeight);
-            context.drawImage(this, 0, 0, imageWidth, imageHeight);
-            var base64 = canvas.toDataURL('image/png', 1);
-            var imgbase = base64.substr(22);
-            callback(imgbase)
-            //this.imgUrl =
-          }
-          img.src = imgUrl;
+          callback(imgUrl);
+          // return imgUrl;
         }
         reader.readAsDataURL(file.files[0]);
       }
@@ -160,6 +132,7 @@ export default {
             _this.snackbar = true;
             _this.clear();
             _this.contents = '';
+            console.log(res);
           })
           .catch(function(error) {
             console.log(error);
