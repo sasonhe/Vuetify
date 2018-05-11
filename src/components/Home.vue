@@ -6,7 +6,6 @@
         <v-flex md6>
           <v-text-field v-model="search" append-icon="search" label="Search" single-line hide-details></v-text-field>
         </v-flex>
-
       </v-layout>
       <v-spacer></v-spacer>
       <v-btn color="error" style="margin-right:0;" :disabled="!valid">删除选中</v-btn>
@@ -25,17 +24,6 @@
             ></v-checkbox>
           </th>
           <th class="text-xs-left">ID</th>
-          <!-- <th
-            class="text-xs-left"
-            v-for="header in props.headers"
-            :key="header.text"
-            :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
-            @click="changeSort(header.value)"
-          >
-
-            <v-icon small>arrow_upward</v-icon>
-            {{ header.text }}
-          </th> -->
           <th class="text-xs-left">文章标题</th>
           <th class="text-xs-left">文章分类</th>
           <th
