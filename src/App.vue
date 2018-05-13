@@ -167,7 +167,8 @@ export default {
   text-decoration: none;
 }
 
-.router-link-active {
+.router-link-active,
+.nav:hover {
   background: #009688;
   transition: all 0.5s;
 }
