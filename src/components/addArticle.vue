@@ -16,7 +16,7 @@
                 选择图片
                 <v-icon right dark>cloud_upload</v-icon>
               </v-btn>
-              <span>123123</span>
+              <span>{{fileName}}</span>
               <input type="file" ref="getFile" v-show="hideFile" name="file" class="upload__input" @change="uploadChange" accept="image/*">
               <br>
               <v-divider></v-divider>
@@ -66,6 +66,7 @@ export default {
       snackbar: false,
       hideFile: false,
       title: '',
+      fileName: '',
       keywords: '',
       contents: '',
       describae: '',
@@ -90,14 +91,16 @@ export default {
         this.files = event.target.files[0]; //提交的图片
         this.getBase64(event.target, (url) => {
           this.files = url; //显示的图片
-          console.log(this.files);
+          // console.log(this.files);
         });
       }
     },
     getBase64(file, callback) {
       var maxWidth = 640;
+
       if (file.files && file.files[0]) {
         var thisFile = file.files[0];
+        this.fileName = thisFile.name;
         if (thisFile.size > 2019200) {
           // mualert.alertBox("图片不能超过800K");
           alert("图片不能超过2M");
@@ -106,9 +109,7 @@ export default {
         var reader = new FileReader();
         reader.onload = function(event) {
           var imgUrl = event.target.result;
-          // console.log(imgUrl);
           callback(imgUrl);
-          // return imgUrl;
         }
         reader.readAsDataURL(file.files[0]);
       }
